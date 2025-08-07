@@ -1,7 +1,7 @@
 //Setup your credentials and mqtt info here:
 //only change the value between the " " leave the rest of the line untouched.
-#define WIFI_SSID "SSID"//**Your SSID here**
-#define WIFI_PWD "password"//**Your password here** leave empty if open (bad!)
+//#define WIFI_SSID "SSID"//**Your SSID here**
+//#define WIFI_PWD "password"//**Your password here** leave empty if open (bad!)
 
 //Uncomment this to set a static IP instead of DHCP for the ESP (Separate by commas instead of dots)
 //#define WIFI_IP 192, 168, 0, 5
@@ -33,8 +33,8 @@
 
 //Smart grid control - Optional:
 //Uncomment and set to enable SG mqtt functions
-//#define PIN_SG1 32// Pin connected to dry contact SG 1 relay (normally open)
-//#define PIN_SG2 33// Pin connected to dry contact SG 2 relay (normally open)
+#define PIN_SG1 32// Pin connected to dry contact SG 1 relay (normally open)
+#define PIN_SG2 33// Pin connected to dry contact SG 2 relay (normally open)
 // Define if your SG relay board is Low or High triggered (signal pins)
 // Only uncomment one of them
 #define SG_RELAY_HIGH_TRIGGER

@@ -27,6 +27,11 @@
 #include "setup.h"
 #endif
 
+#ifdef USE_ETH
+#include "eth_setup.h"
+#undef WIFI_SSID
+#endif
+
 #include "mqttserial.h"
 #include "converters.h"
 #include "comm.h"
@@ -185,6 +190,7 @@ void get_wifi_bssid(const char *ssid, uint8_t *bssid, uint32_t *wifi_channel)
 }
 #endif
 
+#ifndef USE_ETH
 void checkWifi()
 {
   int i = 0;
@@ -347,8 +353,15 @@ void setup()
 
   EEPROM.begin(10);
   readEEPROM();//Restore previous state
+#ifdef USE_ETH
+  mqttSerial.print("Setting up ethernet...");
+  connect_ethernet();
+  mqttSerial.printf("Connected. IP Address: %s
+", ETH.localIP().toString().c_str());
+#else
   mqttSerial.print("Setting up wifi...");
   setup_wifi();
+#endif
   ArduinoOTA.setHostname("ESPAltherma");
   ArduinoOTA.onStart([]() {
     busy = true;
@@ -394,10 +407,12 @@ void waitLoop(uint ms){
 void loop()
 {
   unsigned long start = millis();
+#ifndef USE_ETH
   if (WiFi.status() != WL_CONNECTED)
   { //restart board if needed
     checkWifi();
   }
+#endif
   if (!client.connected())
   { //(re)connect to MQTT if needed
     reconnectMqtt();
