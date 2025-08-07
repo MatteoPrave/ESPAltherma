@@ -254,6 +254,7 @@ void setup_wifi()
   checkWifi();
   mqttSerial.printf("Connected. IP Address: %s\n", WiFi.localIP().toString().c_str());
 }
+#endif
 
 void initRegistries(){
     //getting the list of registries to query from the selected values
@@ -356,8 +357,7 @@ void setup()
 #ifdef USE_ETH
   mqttSerial.print("Setting up ethernet...");
   connect_ethernet();
-  mqttSerial.printf("Connected. IP Address: %s
-", ETH.localIP().toString().c_str());
+  mqttSerial.printf("Connected. IP Address: %s", ETH.localIP().toString().c_str());
 #else
   mqttSerial.print("Setting up wifi...");
   setup_wifi();
